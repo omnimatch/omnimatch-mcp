@@ -1,0 +1,1 @@
+../../plugins/omnimatch/skills/account-info/SKILL.md
