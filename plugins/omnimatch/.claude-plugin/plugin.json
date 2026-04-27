@@ -1,0 +1,19 @@
+{
+  "name": "omnimatch",
+  "version": "2.0.0",
+  "description": "Manage your Omnimatch account via MCP. Browse markets and entities; view matches through inboxes (priority, liked, all, and your own inbox filters); like / reject / respond / unlock matches; share contact details; manage inbox filters with a free-text prompt and strictness; update profile criteria with text; view and change subscription plans (Stripe billing portal). Connects to the Omnimatch MCP server (authenticated user).",
+  "author": {
+    "name": "Omnimatch",
+    "url": "https://omnimatch.ai"
+  },
+  "homepage": "https://omnimatch.ai",
+  "repository": "https://github.com/talentscore/omnimatch-mcp",
+  "license": "MIT",
+  "keywords": ["omnimatch", "talentscore", "matchmaking", "mcp", "account"],
+  "mcpServers": {
+    "omnimatch": {
+      "type": "http",
+      "url": "${OMNIMATCH_MCP_URL:-https://omnimatch.ai/api/mcp}"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "omnimatch": {
+      "url": "${OMNIMATCH_MCP_URL:-https://omnimatch.ai/api/mcp}"
+    }
+  }
+}

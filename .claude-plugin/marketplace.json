@@ -1,0 +1,21 @@
+{
+  "name": "omnimatch-mcp",
+  "owner": {
+    "name": "Omnimatch",
+    "url": "https://omnimatch.ai"
+  },
+  "metadata": {
+    "description": "Claude Code plugin for the Omnimatch MCP server",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "omnimatch",
+      "source": "./plugins/omnimatch",
+      "description": "Manage your Omnimatch account: markets, entities, inboxes, matches, inbox filters, plans, credits.",
+      "category": "productivity",
+      "tags": ["omnimatch", "talentscore", "matchmaking", "mcp", "account"]
+    }
+  ]
+}
