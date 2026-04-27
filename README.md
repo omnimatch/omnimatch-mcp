@@ -49,12 +49,9 @@ Open the plugin marketplace in Cursor and install from this repository, or add t
 
 ### Vercel Skills (`npx skills`)
 
-Install one or more skills with the [Skills CLI](https://github.com/vercel-labs/skills):
+Install all skills with the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-npx skills add talentscore/omnimatch-mcp@account-info
-npx skills add talentscore/omnimatch-mcp@manage-account
-# ...or all of them
 npx skills add talentscore/omnimatch-mcp
 ```
 
