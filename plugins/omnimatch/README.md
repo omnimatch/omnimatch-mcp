@@ -27,10 +27,9 @@ Open the plugin marketplace in Cursor and install **Omnimatch** from this reposi
 }
 ```
 
-## Configuration
+## Authentication
 
-- **MCP URL**: defaults to `https://omnimatch.ai/api/mcp`. Override with the `OMNIMATCH_MCP_URL` environment variable (e.g. for self-hosted dev: `http://localhost:8787/api/mcp`).
-- **Authentication**: the Omnimatch MCP server requires user OAuth. In Claude Code, run `/mcp` and authenticate when prompted; the client will then send a Bearer token to the server. In Cursor, follow the OAuth prompt the first time you use a tool.
+The Omnimatch MCP server requires user OAuth. In Claude Code, run `/mcp` and authenticate when prompted; the client will then send a Bearer token to the server. In Cursor, follow the OAuth prompt the first time you use a tool.
 
 ## How it works: codemode
 
@@ -80,7 +79,6 @@ Level up my candidate profile
 ## Troubleshooting
 
 - **HTTP 401** — not authenticated. Run `/mcp` (Claude Code) or trigger a tool call (Cursor) to complete OAuth so the client sends a Bearer token.
-- **HTTP 404 / HTML response** — the MCP URL isn't reaching the Omnimatch worker. Check `OMNIMATCH_MCP_URL`. For local dev, point to the worker port (`http://127.0.0.1:8787/api/mcp`), not the Vite dev port.
 - **"Entity not found" or "access denied"** — that entity or match isn't owned by the current user; only your own data is visible/editable.
 - **Match insights / suitability gated** — the field is plan-gated; ask about plans (`subscription` skill) for the upgrade link.
 - **Score is `null` or insights say `computed: false`** — scoring runs asynchronously and can take up to 5 minutes. Wait, don't poll aggressively.

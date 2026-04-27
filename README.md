@@ -35,15 +35,7 @@ Open the plugin marketplace in Cursor and install from this repository, or add t
 
 ## Authentication
 
-Both plugins talk to the Omnimatch MCP server over HTTP and authenticate via OAuth. The first time you invoke a tool the client will prompt you to log in. After that, your Bearer token is reused for the session.
-
-## Configuration
-
-| Variable | Default | Used by |
-|----------|---------|---------|
-| `OMNIMATCH_MCP_URL` | `https://omnimatch.ai/api/mcp` | `omnimatch` plugin |
-
-Override these only if you're running a self-hosted Omnimatch worker (e.g. `http://localhost:8787/api/mcp` for local dev).
+The plugin talks to the Omnimatch MCP server at `https://omnimatch.ai/api/mcp` over HTTP and authenticates via OAuth. The first time you invoke a tool the client will prompt you to log in; your Bearer token is reused for the session after that.
 
 ## Repo layout
 
