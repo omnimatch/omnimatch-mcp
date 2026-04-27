@@ -58,7 +58,7 @@ npx skills add talentscore/omnimatch-mcp@manage-account
 npx skills add talentscore/omnimatch-mcp
 ```
 
-The skills tell your agent how to call Omnimatch via MCP, but they don't install the MCP server itself — for the connection, configure the Omnimatch MCP server (`https://omnimatch.ai/api/mcp`) in your client's MCP config (see Claude Code / Cursor sections above). There's no manual submission to skills.sh — once the repo is public and someone runs `npx skills add`, install telemetry surfaces it on the directory automatically.
+The skills tell your agent how to call Omnimatch via MCP, but they don't install the MCP server itself — for the connection, configure the Omnimatch MCP server (`https://omnimatch.ai/api/mcp`) in your client's MCP config (see Claude Code / Cursor sections above).
 
 ## Authentication
 
@@ -91,16 +91,6 @@ omnimatch-mcp/
 ```
 
 The `omnimatch` plugin's Claude Code MCP config is inlined in `.claude-plugin/plugin.json` (`mcpServers` field). The Cursor MCP config lives in a sibling `mcp.json` at the plugin root. Both reference the same hosted MCP endpoint.
-
-## Adding a plugin to this marketplace
-
-1. Create a new folder under `plugins/<your-plugin-name>/`.
-2. Add `.claude-plugin/plugin.json` (Claude Code manifest) and `.cursor-plugin/plugin.json` (Cursor manifest).
-3. If the plugin connects to an MCP server, declare it in `plugin.json` (`mcpServers` field for Claude Code) and in a separate `mcp.json` at the plugin root (for Cursor).
-4. Add `skills/<skill-name>/SKILL.md` files describing what the plugin can do.
-5. Register the plugin in both `.claude-plugin/marketplace.json` and `.cursor-plugin/marketplace.json`.
-
-See [code.claude.com/docs/en/plugins-reference](https://code.claude.com/docs/en/plugins-reference) and [github.com/cursor/plugin-template](https://github.com/cursor/plugin-template) for the full plugin schemas.
 
 ## License
 
