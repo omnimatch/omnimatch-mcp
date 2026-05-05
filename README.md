@@ -29,7 +29,7 @@ The files under `skills/` are symlinks to the canonical SKILL.md files inside th
 ### Claude Code
 
 ```bash
-/plugin marketplace add talentscore/omnimatch-mcp
+/plugin marketplace add omnimatch/omnimatch-mcp
 /plugin install omnimatch@omnimatch-mcp
 ```
 
@@ -52,7 +52,7 @@ Open the plugin marketplace in Cursor and install from this repository, or add t
 Install all skills with the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-npx skills add talentscore/omnimatch-mcp
+npx skills add omnimatch/omnimatch-mcp
 ```
 
 The skills tell your agent how to call Omnimatch via MCP, but they don't install the MCP server itself — for the connection, configure the Omnimatch MCP server (`https://omnimatch.ai/api/mcp`) in your client's MCP config (see Claude Code / Cursor sections above).

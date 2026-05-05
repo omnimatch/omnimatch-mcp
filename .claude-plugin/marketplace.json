@@ -15,7 +15,7 @@
       "source": "./plugins/omnimatch",
       "description": "Manage your Omnimatch account: markets, entities, inboxes, matches, inbox filters, plans, credits.",
       "category": "productivity",
-      "tags": ["omnimatch", "talentscore", "matchmaking", "mcp", "account"]
+      "tags": ["omnimatch", "talentscore", "omnitalent", "omnivc", "omnitender", "matchmaking", "mcp", "account"]
     }
   ]
 }

@@ -7,9 +7,9 @@
     "url": "https://omnimatch.ai"
   },
   "homepage": "https://omnimatch.ai",
-  "repository": "https://github.com/talentscore/omnimatch-mcp",
+  "repository": "https://github.com/omnimatch/omnimatch-mcp",
   "license": "MIT",
-  "keywords": ["omnimatch", "talentscore", "matchmaking", "mcp", "account"],
+  "keywords": ["omnimatch", "talentscore", "omnitalent", "omnivc", "omnitender", "matchmaking", "mcp", "account"],
   "mcpServers": {
     "omnimatch": {
       "type": "http",

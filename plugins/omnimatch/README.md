@@ -9,7 +9,7 @@ This plugin is intended for any **authenticated Omnimatch user** (no admin role 
 ### Claude Code
 
 ```bash
-/plugin marketplace add talentscore/omnimatch-mcp
+/plugin marketplace add omnimatch/omnimatch-mcp
 /plugin install omnimatch@omnimatch-mcp
 ```
 

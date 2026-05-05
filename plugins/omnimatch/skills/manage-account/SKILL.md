@@ -1,13 +1,13 @@
 ---
 name: manage-account
-description: Manage the user's Omnimatch account. Use the Omnimatch MCP codemode tool to update entity profile (title, external link, email notifications), update entity criteria with free-text (stored as a scoring file behind the scenes), manage inbox filters (add/update/remove), perform match actions (like, reject, respond, view link, unlock, share contact), and change subscription plan via Stripe billing portal. Destructive actions require confirmed=true. Call codemode with code that invokes codemode.update_entity_*, codemode.add_inbox_filter, codemode.like_match, codemode.reject_match, codemode.respond_to_match, codemode.unlock_match, codemode.share_my_contact_with_match, codemode.change_plan, etc. Use when the user wants to edit their profile, manage filters, act on matches, or change plan. When talking to the user, always use real titles—never show IDs.
+description: Manage the user's Omnimatch account. Use the Omnimatch MCP codemode tool to update entity profile (title, external link, email notifications), update entity criteria with free-text (stored as a scoring file behind the scenes), create private scoring entities from text, links, or uploaded files, manage inbox filters (add/update/remove), perform match actions (like, reject, respond, view link, unlock, share contact), and change subscription plan via Stripe billing portal. Destructive actions require confirmed=true. Call codemode with code that invokes codemode.update_entity_*, codemode.create_private_entity, codemode.get_private_entity_file_upload_url, codemode.enqueue_private_entity_file_upload, codemode.add_inbox_filter, codemode.like_match, codemode.reject_match, codemode.respond_to_match, codemode.unlock_match, codemode.share_my_contact_with_match, codemode.change_plan, etc. Use when the user wants to edit their profile, upload private opportunities/profiles to score, manage filters, act on matches, or change plan. When talking to the user, always use real titles—never show IDs.
 ---
 
 # Manage Account
 
-Use this skill when the user wants to **change something** in their Omnimatch account: edit a profile, refine search criteria, manage inbox filters, act on a match (like / reject / respond / view link / unlock / share contact), or upgrade/downgrade their plan. The Omnimatch MCP server exposes only a single **codemode** tool ([Cloudflare Codemode](https://developers.cloudflare.com/agents/api-reference/codemode/)) — call it with a `code` parameter (async arrow function body) that runs the appropriate `codemode.<tool>(args)` calls.
+Use this skill when the user wants to **change something** in their Omnimatch account: edit a profile, refine search criteria, create private scoring entities from text / links / uploaded files, manage inbox filters, act on a match (like / reject / respond / view link / unlock / share contact), or upgrade/downgrade their plan. The Omnimatch MCP server exposes only a single **codemode** tool ([Cloudflare Codemode](https://developers.cloudflare.com/agents/api-reference/codemode/)) — call it with a `code` parameter (async arrow function body) that runs the appropriate `codemode.<tool>(args)` calls.
 
-**Important:** All entity edits are **text only**. To refine the entity's description or search criteria, use `codemode.update_entity_criteria({ entityId, text })` — the server stores the text as a scoring file internally and the system regenerates the profile from all scoring files. There is no presigned-URL upload flow over MCP. To attach an arbitrary text note (e.g. transcript, kickoff-call notes), use `codemode.add_entity_note({ entityId, name, text })`.
+**Important:** Existing profile edits are text-first. To refine an existing entity's description or search criteria, use `codemode.update_entity_criteria({ entityId, text })` — the server stores the text as a scoring file internally and regenerates the profile. For creating a new **private scoring entity** from an uploaded file, use the private upload workflow below.
 
 **Confirmation pattern:** Destructive or credit-spending tools (`reject_match`, `unlock_match`, `reevaluate_match`, `remove_entity_files`, `remove_inbox_filter`, `update_entity_title`, `update_entity_external_link`, `respond_to_match` with `direction: "less"`) require `confirmed: true`. The first call returns `{ requiresConfirmation: true, action, details, message }` — show the action to the user and only re-call with `confirmed: true` once they confirm.
 
@@ -21,6 +21,23 @@ Use this skill when the user wants to **change something** in their Omnimatch ac
 - Search criteria refinement → `codemode.update_entity_criteria({ entityId, text })`.
 - Add a note → `codemode.add_entity_note({ entityId, name, text })`.
 - Remove files → `codemode.remove_entity_files({ entityId, fileKeys, confirmed })` (keys from `get_entity` files[]).
+
+## Private Scoring Entities
+
+Use these when the user wants to upload a private opportunity/profile to score against their own existing entities. Private scoring entities are visible only to the owner and are excluded from cross-owner search.
+
+- Text or link private upload → `codemode.create_private_entity({ marketId, entityTypeTitle, title, externalLink?, initialCriteriaText?, confirmed })`.
+- List existing private scoring entities → `codemode.list_private_entities({ marketId, entityTypeTitle? })`.
+- Rescore existing public profile against private scoring entities → `codemode.score_against_private_entities({ entityId, confirmed })`.
+- Delete a private scoring entity → `codemode.delete_private_entity({ entityId, confirmed })`.
+
+### Private File Upload Workflow
+
+1. Call `codemode.get_private_entity_file_upload_url({ marketId, contentType, name })`.
+2. Upload the file bytes with PUT to the returned `uploadUrl`.
+3. Call `codemode.enqueue_private_entity_file_upload({ marketId, entityTypeTitle, title, stagedKey, contentType, name, confirmed: true })` using the returned `stagedKey`, `contentType`, and `name`.
+
+The queued job creates the private scoring entity, attaches the file privately, and runs profile generation/scoring in the background.
 
 ## Inbox filters
 
@@ -50,7 +67,7 @@ Match actions all take `{ matchId, entityId }` (the match id and your entity id)
 ## Workflow patterns
 
 - **"Reject this match"** — call `reject_match` first without `confirmed`; show the preview to the user; if they confirm, call again with `confirmed: true`.
-- **"Unlock that match"** — same pattern; warn that it costs one credit before re-calling with `confirmed: true`.
+- **"Unlock that match"** — same pattern; warn that it costs one credit before re-calling with `confirmed: true`. Private scoring entity matches are already unlocked.
 - **"Add a filter for senior roles"** — `codemode.add_inbox_filter({ entityId, prompt: "Is this a senior role?", strictness: "normal" })`. After it returns the filterId, tell the user the filter has been queued for output-format inference and will appear in the inbox once matches are evaluated.
 - **"What does my filter say about this match"** — `codemode.list_match_inbox_filter_answers({ matchId, entityId })` (read-only — also available in account-info).
 - **"Upgrade to the Pro plan"** — `codemode.list_plans({ marketId })` to find the plan with name "Pro" and its planId; then `codemode.change_plan({ marketId, targetPlanId })`. Hand the user the `billingPortalUrl`.
