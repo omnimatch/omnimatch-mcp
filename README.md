@@ -28,10 +28,19 @@ The files under `skills/` are symlinks to the canonical SKILL.md files inside th
 
 ### Claude Code
 
-```bash
+Run these slash commands in Claude Code (each on its own line, in order):
+
+```
 /plugin marketplace add omnimatch/omnimatch-mcp
 /plugin install omnimatch@omnimatch-mcp
+/reload-plugins
+/mcp
 ```
+
+- `/plugin marketplace add omnimatch/omnimatch-mcp` — register this repo as a plugin marketplace.
+- `/plugin install omnimatch@omnimatch-mcp` — install the `omnimatch` plugin from it.
+- `/reload-plugins` — load the new plugin, its skills, and the MCP server entry.
+- `/mcp` — complete OAuth so Claude Code holds a Bearer token for the Omnimatch MCP server. Re-run any time you need to re-authenticate.
 
 ### Cursor
 
