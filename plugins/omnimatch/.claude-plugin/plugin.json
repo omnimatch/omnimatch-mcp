@@ -12,7 +12,7 @@
   "mcpServers": {
     "omnimatch": {
       "type": "http",
-      "url": "${OMNIMATCH_MCP_URL:-http://localhost:8787/api/mcp}"
+      "url": "https://omnimatch.ai/api/mcp"
     }
   }
 }

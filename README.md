@@ -64,7 +64,7 @@ Install all skills with the [Skills CLI](https://github.com/vercel-labs/skills):
 npx skills add omnimatch/omnimatch-mcp
 ```
 
-The skills tell your agent how to call Omnimatch via MCP, but they don't install the MCP server itself — for the connection, configure the Omnimatch MCP server in your client's MCP config (see Claude Code / Cursor sections above). The Claude Code plugin manifest defaults to `http://localhost:8787/api/mcp` for local development; set `OMNIMATCH_MCP_URL` to override (for example `https://omnimatch.ai/api/mcp` for production).
+The skills tell your agent how to call Omnimatch via MCP, but they don't install the MCP server itself — for the connection, point your client at the hosted MCP endpoint `https://omnimatch.ai/api/mcp` (see Claude Code / Cursor sections above). The Claude Code plugin manifest uses the same URL.
 
 ## Authentication
 
@@ -96,7 +96,7 @@ omnimatch-mcp/
         └── README.md
 ```
 
-The `omnimatch` plugin's Claude Code MCP config is inlined in `.claude-plugin/plugin.json` (`mcpServers` field). The Cursor MCP config lives in a sibling `mcp.json` at the plugin root (defaults to the hosted production endpoint; use `http://localhost:8787/api/mcp` when developing against a local worker).
+The `omnimatch` plugin's Claude Code MCP config is inlined in `.claude-plugin/plugin.json` (`mcpServers` field). The Cursor MCP config lives in a sibling `mcp.json` at the plugin root. Both use the production MCP URL `https://omnimatch.ai/api/mcp`.
 
 ## License
 

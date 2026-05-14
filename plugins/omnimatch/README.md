@@ -28,7 +28,7 @@ claude plugin install omnimatch@talentscore-plugins --scope project
 
 ### Cursor
 
-Open the plugin marketplace in Cursor and install **Omnimatch** from this repository, or add an MCP server manually to your `mcp.json`. Production default:
+Open the plugin marketplace in Cursor and install **Omnimatch** from this repository, or add an MCP server manually to your `mcp.json`:
 
 ```json
 {
@@ -40,24 +40,15 @@ Open the plugin marketplace in Cursor and install **Omnimatch** from this reposi
 }
 ```
 
-For local development against a running worker, set `"url": "http://localhost:8787/api/mcp"` (or the same host and port your Worker uses).
-
 ## Configuration
 
-- **MCP URL**: By default the plugin connects to `http://localhost:8787/api/mcp`. Override with the `OMNIMATCH_MCP_URL` environment variable (e.g. for a remote or different port).
+- **MCP URL**: This plugin always connects to **`https://omnimatch.ai/api/mcp`** (production).
 - **Authentication**: The Omnimatch MCP requires user OAuth. In Claude Code, use `/mcp` and authenticate when prompted so the client can send a Bearer token to the server. Any authenticated user can use this server (unlike the Market Manager MCP, which is admin-only).
 
 ## Prerequisites
 
-1. **Worker running**: Start the Omnimatch worker so the MCP endpoint is available:
-
-   ```bash
-   npm run dev
-   ```
-
-   `npm run dev` starts the worker and Vite together. MCP is served at `http://localhost:8787/api/mcp`.
-
-2. **User account**: You must be logged in (Better Auth). The MCP uses your session/token to scope all tools to your entities and matches.
+1. **Hosted MCP**: The endpoint is served by Omnimatch in production; no local worker is required to use this plugin from an editor.
+2. **User account**: Sign in at [omnimatch.ai](https://omnimatch.ai) and complete OAuth in your MCP client when prompted. The MCP uses your token to scope all tools to your entities and matches.
 
 ## MCP: Codemode only
 
@@ -232,6 +223,6 @@ What subscription plans are available for my entity <entity-id>?
 ## Troubleshooting
 
 - **HTTP 401** — Not authenticated. Use `/mcp` in Claude Code and complete OAuth so the client sends a Bearer token.
-- **HTTP 404 / HTML response** — Request is not reaching the Worker. Start `npm run dev` and ensure the MCP URL points at the Worker (e.g. `http://127.0.0.1:8787/api/mcp`).
+- **HTTP 404 / HTML response** — The client is not reaching the MCP API (wrong URL, network issue, or upstream outage). Confirm the MCP URL is `https://omnimatch.ai/api/mcp` and try again.
 - **Entity not found or access denied** — The entity or match is not owned by the current user. Only your own entities and matches are visible and editable.
 - **Match insights / suitability gated** — Use the `subscription` skill or `codemode.list_plans({ marketId })` for the upgrade link and plan details.
