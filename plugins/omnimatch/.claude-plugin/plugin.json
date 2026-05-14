@@ -1,6 +1,6 @@
 {
   "name": "omnimatch",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Manage your Omnimatch account via MCP. Browse markets and entities; view matches through inboxes (priority, liked, all, and your own inbox filters); like / reject / respond / unlock matches; share contact details; manage inbox filters with a free-text prompt and strictness; update profile criteria with text; view and change subscription plans (Stripe billing portal). Connects to the Omnimatch MCP server (authenticated user).",
   "author": {
     "name": "TalentScore"
